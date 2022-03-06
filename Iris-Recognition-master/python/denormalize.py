@@ -12,6 +12,9 @@ from detail_extraction import erase_non_iris
 
 # TODO: add scaling
 
+def draw_circle(img, cntr, radius): pass
+
+
 def denormalize(cir_iris, cir_pupil, im_iris, normalized_template):
     # iris = np.array(im_iris, dtype=bool) # note: boolean
     iris = im_iris.astype(bool) # 이거 될까?
@@ -35,6 +38,9 @@ def denormalize(cir_iris, cir_pupil, im_iris, normalized_template):
 
     # scaling and discretization for coordinate alignment
     r_grid = radial_res/r_iris * r_grid.astype(int) # r -> y
+    for i in range(20):
+        cntr_diff = cir_pupil[2] - cntr_iris
+
     th_grid = angular_res/(2*np.pi) * th_grid.astype(int) # th -> x
     # TODO: !!!! pupil 안빼면 반띵돼버리네
 
