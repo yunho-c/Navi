@@ -35,6 +35,10 @@ def remove_average_flat(img):
     new_img = img - np.nanmean(img)
     return new_img
 
+def detail_extraction(): pass # not implemented
+    # input: cir_iris, image
+    # output: detail, original with detail removed -> result
+
 def main():
     from cv2 import imread, imwrite
     from fnc.segment import segment
