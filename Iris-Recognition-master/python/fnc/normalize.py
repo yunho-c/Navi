@@ -112,15 +112,15 @@ def normalize(image, x_iris, y_iris, r_iris, x_pupil, y_pupil, r_pupil,
 	polar_noise[coords] = 1
 
 	# Get rid of outling points in order to write out the circular pattern
-	image[yo, xo] = 255
+	image[yo, xo] = 0 #255 MODIFIED
 
 	# Get pixel coords for circle around iris
 	x,y = circlecoords([x_iris,y_iris], r_iris, image.shape)
-	image[y,x] = 255
+	image[y,x] = 0 #255 MODIFIED
 
 	# Get pixel coords for circle around pupil
 	xp,yp = circlecoords([x_pupil,y_pupil], r_pupil, image.shape)
-	image[yp,xp] = 255
+	image[yp,xp] = 0 #255 MODIFIED
 
 	# Replace NaNs before performing feature encoding
 	coords = np.where((np.isnan(polar_array)))
