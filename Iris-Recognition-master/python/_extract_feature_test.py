@@ -26,7 +26,7 @@ c = plt.imshow(a)   #cmap ='Greens', vmin = z_min, vmax = z_max,
                     #extent =[x.min(), x.max(), y.min(), y.max()],
                     #interpolation ='nearest', origin ='lower')
 
-plt.title('Extracted Feature', fontweight ="bold")
+# plt.title('Extracted Feature', fontweight ="bold")
 
 plt.show()
 
