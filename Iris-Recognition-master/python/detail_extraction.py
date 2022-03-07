@@ -35,9 +35,14 @@ def remove_average_flat(img):
     new_img = img - np.nanmean(img)
     return new_img
 
-def detail_extraction(): pass # not implemented
+def detail_extraction(cir_iris, img):  # not implemented
     # input: cir_iris, image
     # output: detail, original with detail removed -> result
+    iris = erase_non_iris(cir_iris, img)
+    blrd = blur_gaussian(iris)
+    detail = iris - blrd
+    # detail = remove_average_flat(detail)
+    return detail
 
 def main():
     from cv2 import imread, imwrite
