@@ -4,13 +4,13 @@ import numpy as np
 from fnc.normalize import normalize
 from detail_extraction import erase_non_iris, detail_extraction
 
-radial_res = 20
+radial_res = 120
 angular_res = 240
 
 GAIN = 5
 
-fn1 = '001_1_2.bmp'
-fn2 = '002_1_1.bmp' # ?
+fn1 = './img/001_1_2.bmp'
+fn2 = './img/002_1_1.bmp' # ?
 
 
 def draw_circle(img, cntr, r, val): 
@@ -25,8 +25,8 @@ def smart_r_grid(cir_iris, cir_pupil, iris_bool):
     r_diff = cir_iris[2] - cir_pupil[2]
 
     r_grid = iris_bool.copy().astype(int)
-    for i in range(20):
-        c = 20-i
+    for i in range(radial_res):
+        c = radial_res-i
         r_grid = draw_circle(r_grid, 
                              cntr_iris+cntr_diff - cntr_diff*((c-1)/radial_res), 
                              r_iris - r_diff*((i+1)/radial_res), val=c)
