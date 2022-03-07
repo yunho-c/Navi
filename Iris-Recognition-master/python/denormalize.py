@@ -1,18 +1,27 @@
 import numpy as np
 
+from fnc.normalize import normalize
+from detail_extraction import erase_non_iris, detail_extraction
+
 radial_res = 20
 angular_res = 240
 
-from detail_extraction import erase_non_iris
 
-# TODO: account for non-centered pupil
-# 애초에 normalize.py 저 개같은거 원리를 이해하지도 못하겠음
-# 아마도 pupil은 잘라내고 남은 부분에 radial resolution을 맞추는걸듯
-# 씁,, ㅠ 생각해보니 열심히 해도 1371 들으면 다들 나만큼 하겠다. 더잘하거나
+def draw_circle(img, cntr, r, val): 
+    y, x = np.ogrid[:img.shape[0], :img.shape[1]]
+    dist = np.sqrt((x - cntr[1])**2 + (y - cntr[0])**2)
+    return np.where(dist <= r, img, val)
 
-# TODO: add scaling
+def smart_r_grid(cir_iris, cir_pupil, iris_bool):
+    cntr_iris =  cir_iris[0:2]; r_iris = cir_iris[2]
+    cntr_diff = cir_pupil[0:2] - cir_iris[0:2]; r_diff = cir_pupil[2] - cir_iris[2]
 
-def draw_circle(img, cntr, radius): pass
+    r_grid = iris_bool.copy().astype(int)
+    for i in range(20):
+        r_grid = draw_circle(r_grid, 
+                                cntr_iris + cntr_diff*((i+1)/radial_res), 
+                                r_iris + r_diff*((i+1)/radial_res), val=i)
+    return r_grid
 
 
 def denormalize(cir_iris, cir_pupil, im_iris, normalized_template):
@@ -38,11 +47,8 @@ def denormalize(cir_iris, cir_pupil, im_iris, normalized_template):
 
     # scaling and discretization for coordinate alignment
     r_grid = radial_res/r_iris * r_grid.astype(int) # r -> y
-    for i in range(20):
-        cntr_diff = cir_pupil[2] - cntr_iris
-
+    effective_r_grid = smart_r_grid(cir_iris, cir_pupil, iris) # r -> y
     th_grid = angular_res/(2*np.pi) * th_grid.astype(int) # th -> x
-    # TODO: !!!! pupil 안빼면 반띵돼버리네
 
     normalized_template[th_grid, r_grid]
 
@@ -55,11 +61,21 @@ def main():
     from cv2 import imread #, imwrite
 
     # read, segment, clean sample image
-    im = imread('001_1_2.bmp', 0)
+    im1 = imread('001_1_2.bmp', 0)
     eyelashes_thres = 80; use_multiprocess = False
-    cir_iris, cir_pupil, imwithnoise = segment(im, eyelashes_thres, use_multiprocess)
+    cir_iris, cir_pupil, imwithnoise = segment(im1, eyelashes_thres, use_multiprocess)
     iris = erase_non_iris(cir_iris, imwithnoise)
+    detail = detail_extraction(cir_iris, imwithnoise)
+    # test: add normalized -> denormalized detail from same file
+    result = ''
+    normalize
     # test: add detail from another file
+    # hamming distance
+    # image comparison (50/50)
+
+    # 음 몰라~!
+
+
 
 
 if __name__ == "__main__": main()
