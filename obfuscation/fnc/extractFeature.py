@@ -28,7 +28,7 @@ sigmaOnf = 0.5
 ##-----------------------------------------------------------------------------
 ##  Function
 ##-----------------------------------------------------------------------------
-def extractFeature(im_filename, eyelashes_thres=80, use_multiprocess=True):
+def extractFeature(im_filename, eyelashes_thres=80, use_multiprocess=False):
 	"""
 	Description:
 		Extract features from an iris image
