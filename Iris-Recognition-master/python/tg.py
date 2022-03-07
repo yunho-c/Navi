@@ -26,7 +26,8 @@ def smart_r_grid(cir_iris, cir_pupil, iris_bool):
         c = 20-i
         r_grid = draw_circle(r_grid, 
                              cntr_iris+cntr_diff - cntr_diff*((c-1)/radial_res), 
-                             r_iris - r_diff*((c-1)/radial_res), val=c)
+                             r_iris + r_diff*((i+1)/radial_res), val=c)
+        print(r_iris + r_diff*((i+1)/radial_res))
 
     return r_grid
 
