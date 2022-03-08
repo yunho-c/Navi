@@ -7,13 +7,8 @@ from glob import glob
 
 import os
 
-data_dir = './dataset/CASIA1/1/'
+import argparse
 
-files = glob(os.path.join(data_dir, "*_1_*.jpg"))
-print(files)
 
-a = imread('./dataset/CASIA1/2/002_1_2.jpg',0)
-
-plt.imshow(a)
-plt.show()
+imread('./dataset/CASIA1/8/008_1_2.jpg', 0)
 

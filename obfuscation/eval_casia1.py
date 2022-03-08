@@ -51,6 +51,8 @@ def pool_func_calHammingDist(args):
 #	Main execution
 #------------------------------------------------------------------------------
 def main():
+    thresholds = np.linspace(start=0.0, stop=1.0, num=100) # DEBUG; duplicated.
+
     # Get identities of MMU2 dataset
     identities = glob(os.path.join(CASIA1_DIR, "**"))
     identities = sorted([os.path.basename(identity) for identity in identities])
@@ -80,11 +82,12 @@ def main():
 
 
     # Evaluate parameters
-    pools = Pool(processes=1)#processes=cpu_count())
+    pools = Pool(processes=cpu_count())
     best_results = []
-    for eye_threshold in tqdm(eyelashes_thresholds, total=len(eyelashes_thresholds)):
+    for idx, eye_threshold in enumerate(tqdm(eyelashes_thresholds, total=len(eyelashes_thresholds))):
         # Extract features
-        args = zip(image_files, repeat(eye_threshold), repeat(False))
+        # 이거 하면 빨라질테니, 한번 해보자! It's either recursion error (no guards) or needing to un-pool top level. Most likely guard, since it works in Ubuntu.
+        args = zip(image_files, repeat(eye_threshold), repeat(False)) # DEBUG; just a note -- this line seems important
         features = list(pools.map(pool_func_extract_feature, args))
 
         # Calculate the distances
@@ -125,6 +128,8 @@ def main():
         best_fscore = max(fscores)
         best_threshold = thresholds[fscores.index(best_fscore)]
         best_results.append((eye_threshold, best_threshold, best_fscore))
+
+        print("I'm making progress! {} out of {}".format(idx, len(eyelashes_thresholds)))
 
     # Show the final best result
     eye_thresholds = [item[0] for item in best_results]

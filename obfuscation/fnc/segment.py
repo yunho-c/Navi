@@ -10,7 +10,7 @@ import multiprocessing as mp
 ##-----------------------------------------------------------------------------
 ##  Function
 ##-----------------------------------------------------------------------------
-def segment(eyeim, eyelashes_thres=80, use_multiprocess=True):
+def segment(eyeim, eyelashes_thres=80, use_multiprocess=False):
 	"""
 	Description:
 		Segment the iris region from the eye image.
@@ -58,6 +58,7 @@ def segment(eyeim, eyelashes_thres=80, use_multiprocess=True):
 
 	# If use_multiprocess
 	if use_multiprocess:
+		# print('segment.py is multiprocessed') # DEBUG
 		ret_top = mp.Manager().dict()
 		ret_bot = mp.Manager().dict()
 		p_top = mp.Process(
@@ -77,6 +78,7 @@ def segment(eyeim, eyelashes_thres=80, use_multiprocess=True):
 
 	# If not use_multiprocess
 	else:
+		# print('segment.py is NOT multiprocessed') # DEBUG
 		mask_top = findTopEyelid(imsz, imageiris, irl, icl, rowp, rp)
 		mask_bot = findBottomEyelid(imsz, imageiris, rowp, rp, irl, icl)
 
