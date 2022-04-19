@@ -1,4 +1,4 @@
-from __future__ import division
+
 import numpy as np
 import sys, os, argparse
 from os.path import isfile, join, isdir

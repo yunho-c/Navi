@@ -58,7 +58,7 @@ def load_image(path, width=0,height=0, pad=True):
     pad_height = max(height - ori_height, 0);
     pad_width  = max(width - ori_width, 0);
     
-    print("width:{},height:{}".format(width,  height ))
+    print(("width:{},height:{}".format(width,  height )))
     
     img = cv2.copyMakeBorder(img, 0, pad_height, 0, pad_width, cv2.BORDER_REFLECT_101)
 
@@ -108,7 +108,7 @@ if not os.path.exists(save_iris_dir):
     
 imgs = [i for i in os.listdir(test_dir) if '.JPEG' in i]
 nimgs = len(imgs)
-print "totally "+str(nimgs)+"images"
+print("totally "+str(nimgs)+"images")
 start = time.time()
 for i in range(nimgs):
   img_path = join(test_dir, imgs[i])
@@ -131,7 +131,7 @@ for i in range(nimgs):
   scipy.misc.imsave(join(save_pupil_dir, fn+'.png'),pupil_result)
   
   
-  print "Saving to '" + join(save_mask_dir, imgs[i][0:-4]) + "', Processing %d of %d..."%(i + 1, nimgs) 
+  print("Saving to '" + join(save_mask_dir, imgs[i][0:-4]) + "', Processing %d of %d..."%(i + 1, nimgs)) 
 end = time.time()
 avg_time = (end-start)/nimgs
-print("average time is %f seconds"%avg_time)
+print(("average time is %f seconds"%avg_time))
