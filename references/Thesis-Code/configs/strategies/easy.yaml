@@ -1,0 +1,60 @@
+salt_and_pepper:
+  intensity:
+    type: samples_num
+    params:
+      start: 0
+      stop: 100
+      num: 5
+  density:
+    type: samples_num
+    params:
+      start: 0.01
+      stop: 0.99
+      num: 10
+
+uniform_noise:
+  intensity:
+    type: samples_num
+    params:
+      start: 0
+      stop: 250
+      num: 10
+
+
+gaussian_noise:
+  loc:
+    type: const
+    params:
+      val: 0.0
+  scale:
+    type: samples_num
+    params:
+      start: 0
+      stop: 100
+      num: 20
+
+
+bilateral_filter:
+  sigma_s:
+    type: samples_exp
+    params:
+      start: 1
+      stop: 10
+      num: 5
+      exp: 10
+  sigma_c:
+    type: samples_exp
+    params:
+      start: 5
+      stop: 100
+      num: 5
+      exp: 10
+
+gaussian_filter:
+  sigma:
+    type: samples_exp
+    params:
+      start: 0
+      stop: 10
+      num: 10
+      exp: 15

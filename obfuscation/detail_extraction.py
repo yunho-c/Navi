@@ -29,7 +29,7 @@ def blur_gaussian(img):
     return nan_conserving_gaussian(img, sigma=SIGMA)
 
 def blur_radial(img):
-    return
+    return 'not_implemented'
 
 def remove_average_flat(img):
     new_img = img - np.nanmean(img)
@@ -47,7 +47,7 @@ def detail_extraction(cir_iris, img):  # not implemented
 def main():
     from cv2 import imread, imwrite
     from fnc.segment import segment
-    im = imread('001_1_2.bmp', 0) # filename
+    im = imread('./dataset/CASIA1/1/001_1_2.jpg', 0) # filename
     eyelashes_thres = 80; use_multiprocess = False
 
     cir_iris, cir_pupil, imwithnoise = segment(im, eyelashes_thres, use_multiprocess)

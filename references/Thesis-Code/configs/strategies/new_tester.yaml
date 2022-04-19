@@ -1,0 +1,125 @@
+gaussian_filter:
+  sigma:
+    type: samples_exp
+    params:
+      start: 0
+      stop: 50
+      num: 5
+      exp: 100
+
+
+mean_filter:
+  size:
+    type: samples_step
+    params:
+      start: 1
+      stop: 11
+      step: 2
+
+
+median_filter:
+  size:
+    type: samples_step
+    params:
+      start: 1
+      stop: 11
+      step: 2
+
+
+bilateral_filter:
+  sigma_s:
+    type: samples_exp
+    params:
+      start: 1
+      stop: 20
+      num: 3
+      exp: 100
+  sigma_c:
+    type: samples_exp
+    params:
+      start: 5
+      stop: 100
+      num: 3
+      exp: 100
+
+
+anisotropic_diffusion:
+  kappa:
+    type: samples_exp
+    params:
+      start: 20
+      stop: 80
+      num: 3
+      exp: 100
+  gamma:
+    type: samples_exp
+    params:
+      start: 0.01
+      stop: 0.25
+      num: 3
+      exp: 100
+  iterations:
+    type: const
+    params:
+      val: 100
+
+
+non_local_means:
+  h:
+    type: samples_exp
+    params:
+      start: 0
+      stop: 100
+      num: 5
+      exp: 100
+
+
+uniform_noise:
+  intensity:
+    type: samples_exp
+    params:
+      start: 0
+      stop: 250
+      num: 5
+      exp: 100
+
+
+gaussian_noise:
+  loc:
+    type: const
+    params:
+      val: 0.0
+  scale:
+    type: samples_exp
+    params:
+      start: 0
+      stop: 100
+      num: 5
+      exp: 100
+
+
+salt_and_pepper:
+  intensity:
+    type: samples_exp
+    params:
+      start: 0
+      stop: 100
+      num: 3
+      exp: 100
+  density:
+    type: samples_exp
+    params:
+      start: 0.01
+      stop: 0.99
+      num: 3
+      exp: 100
+
+
+cauchy_noise:
+  scale:
+    type: samples_exp
+    params:
+      start: 1
+      stop: 50
+      num: 5
+      exp: 100

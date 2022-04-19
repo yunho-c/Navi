@@ -1,0 +1,12 @@
+gaze_data:
+  - '/home/anton/data/eyedata/gaze/anton/'
+  - '/home/anton/data/eyedata/gaze/jakob/'
+  - '/home/anton/data/eyedata/gaze/maja/'
+  - '/home/anton/data/eyedata/gaze/far_home/'
+  - '/home/anton/data/eyedata/gaze/mor_home/'
+
+iris_data:
+  - '/home/anton/data/eyedata/iris/casia4i.json'
+
+pupil_data:
+  - '/home/anton/data/eyedata/pupil/excuse/info.json'

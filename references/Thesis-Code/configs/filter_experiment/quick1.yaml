@@ -1,0 +1,19 @@
+data_config: configs/data/home-dev.yaml
+filters:
+- gaussian_filter
+method: NaiveMultiObjectiveOptimizer
+metrics:
+  gaze_metrics:
+  - GazeAccuracy
+  iris_metrics: []
+  pupil_metrics:
+  - PupilDetectionError
+metrics_config: configs/metrics/std.yaml
+polar_resolution:
+- 10
+- 100
+samples:
+  gaze: 50
+  iris: 50
+  pupil: 50
+strategy_config: configs/strategies/new_tester.yaml

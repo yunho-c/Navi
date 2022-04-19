@@ -1,0 +1,31 @@
+data_config: configs/data/home-dev.yaml
+filters:
+- gaussian_filter
+- mean_filter
+- median_filter
+- bilateral_filter
+- anisotropic_diffusion
+- non_local_means
+- gaussian_noise
+- uniform_noise
+- salt_and_pepper
+- cauchy_noise
+method: NaiveMultiObjectiveOptimizer
+metrics:
+  gaze_metrics:
+  - GazeAccuracy
+  iris_metrics:
+  - GradientEntropy
+  - GaborEntropy
+  - ImageSimilarity
+  pupil_metrics:
+  - PupilDetectionError
+metrics_config: configs/metrics/std.yaml
+polar_resolution:
+- 20
+- 200
+samples:
+  gaze: 50
+  iris: 50
+  pupil: 50
+strategy_config: configs/strategies/new_tester.yaml

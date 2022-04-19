@@ -11,6 +11,14 @@ from flask_cors import CORS
 import uuid
 import os
 
+from obfuscate import obfuscate
+
+from cv2 import imread, cvtColor, COLOR_BGR2GRAY
+
+# from fnc.
+from detection import find_eyes
+
+
 UPLOAD_FOLDER = '/path/to/the/uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
@@ -20,9 +28,12 @@ app.config.from_object(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-@app.route('/', methods=['GET', 'POST'])
-def upload_file():
+@app.route('/process', methods=['GET', 'POST'])
+def process_image():
+
+    # read image
     if request.method == 'POST':
+
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
@@ -33,10 +44,41 @@ def upload_file():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
+
         if file and allowed_file(file.filename):
+
+            # detect iris
+            img = imread(file)
+            eye1, eye2, coords = find_eyes(img)
+
+            # decolorize
+            eye1_m = cvtColor(eye1, COLOR_BGR2GRAY) # may not be BGR
+            eye2_m = cvtColor(eye2, COLOR_BGR2GRAY)
+            eye1_c = eye1 / eye1_m
+            eye2_c = eye2 / eye2_m
+
+            # perform obfuscation
+            eye1_obs = obfuscate(eye1_c)
+            eye2_obs = obfuscate(eye2_c)
+
+            # recolorize
+            eye1_rslt = eye1_c * eye1_obs
+            eye2_rslt = eye2_c * eye2_obs
+
+            # paste back onto original image
+            with coords[0] as (x,y,w,h): img[x,y,x+w,y+h] = eye1_rslt
+            with coords[1] as (x,y,w,h): img[x,y,x+w,y+h] = eye2_rslt
+
+            return img
+            #  may involve redirecting
+
+            # save
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('download_file', name=filename))
+            # response_object = {'status':'success'}
+
+
     return '''
     <!doctype html>
     <title>Upload new File</title>

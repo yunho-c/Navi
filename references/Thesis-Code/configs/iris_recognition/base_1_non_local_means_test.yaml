@@ -1,0 +1,14 @@
+dataset: /home/anton/data/eyedata/iris/casia4iQ.json
+filters:
+  non_local_means:
+    h: 100
+parameters:
+  angles: 6
+  epsilon: 0.001
+  resolution:
+    angular: 100
+    radial: 10
+  rotation:
+    num: 7
+    step_size: 3
+  scales: 4

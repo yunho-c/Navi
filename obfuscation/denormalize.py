@@ -1,3 +1,4 @@
+# see TODO @ line 81
 from matplotlib.pyplot import polar
 import numpy as np
 
@@ -7,10 +8,10 @@ from detail_extraction import erase_non_iris, detail_extraction
 radial_res = 120
 angular_res = 240
 
-GAIN = 5
+GAIN = 1.5
 
-fn1 = './img/001_1_2.bmp'
-fn2 = './img/002_1_1.bmp' # ?
+fn1 = './dataset/CASIA1/1/001_1_2.jpg'
+fn2 = './dataset/CASIA1/3/003_1_1.jpg' # ?
 
 
 def draw_circle(img, cntr, r, val): 
@@ -30,7 +31,7 @@ def smart_r_grid(cir_iris, cir_pupil, iris_bool):
         r_grid = draw_circle(r_grid, 
                              cntr_iris+cntr_diff - cntr_diff*((c-1)/radial_res), 
                              r_iris - r_diff*((i+1)/radial_res), val=c)
-        print(r_iris - r_diff*((i+1)/radial_res), c)
+        # DEBUG print(r_iris - r_diff*((i+1)/radial_res), c)
 
     return r_grid
     # pupil 문제로 인하여 (또는 boundary case에 대한 접근의 차이로 인하여) masked region에 노이즈가 생기는 듯 함.!
@@ -77,6 +78,14 @@ def denormalize(cir_iris, cir_pupil, im_iris, normalized_template):
     a = np.where(iris, a, 0)
 
     return a
+    # TODO worknote: imperfect iris, pupil segmentation causes detail corruption in pupil region. 
+    # this is observed as a fanfre-like pattern — because the denormalizer is accessing same values
+    # of radius in rectangular template for every actual radius in polar representation. (hence the zooming-in look)
+    # it would be desirable to explicitly ensure that the entirety of pupil region is part of iris mask before 
+    # we play around with subtracting and recovering obfuscated details.
+    # One good question to ask is: is distortion present immediately after extract_details()?
+
+
 
 
 def main():
@@ -93,11 +102,10 @@ def main():
     result = im1 - np.nan_to_num(detail)
     result2_sp = result.copy()
     # test: add normalized -> denormalized detail from same file
-    polar_array, noise_array = normalize(detail, cir_iris[1], cir_iris[0], cir_iris[2],
-                                        cir_pupil[1], cir_pupil[0], cir_pupil[2],
-                                        radial_res, angular_res)
+    polar_array, noise_array, norm = normalize(detail, cir_iris, cir_pupil, radial_res, angular_res)
     denormalized_detail = denormalize(cir_iris, cir_pupil, iris, polar_array)
-    result = result + (GAIN/np.max(denormalized_detail + np.min(denormalized_detail)))*denormalized_detail
+    g = (GAIN*norm/(np.max(denormalized_detail) - np.min(denormalized_detail)))
+    result = result + g*denormalized_detail
 
     plt.title('Iris Detail Recovered from Original Normalized Template'.format(radial_res, angular_res), fontweight ="bold")
     plt.imshow(denormalized_detail)
@@ -109,7 +117,7 @@ def main():
 
     plt.title('Original Iris Detail Removed, Normalized, Recovered, Added'.format(radial_res, angular_res), fontweight ="bold")
     plt.text(15, 15, "Radial Resolution={}, Angular Resolution: {}".format(radial_res, angular_res))
-    plt.text(15, 30, "Gain={}".format(GAIN))
+    plt.text(15, 30, "Gain={}".format(round(g, 2)))
     plt.imshow(result)
     plt.show()
 
@@ -120,11 +128,11 @@ def main():
     detail2 = detail_extraction(cir_iris2, imwithnoise2)
     result2 = im2 - np.nan_to_num(detail2)
     # test: add normalized -> denormalized detail from same file
-    polar_array2, noise_array2 = normalize(detail2, cir_iris2[1], cir_iris2[0], cir_iris2[2],
+    polar_array2, noise_array2, norm2 = normalize(detail2, cir_iris2[1], cir_iris2[0], cir_iris2[2],
                                         cir_pupil2[1], cir_pupil2[0], cir_pupil2[2],
                                         radial_res, angular_res)
     denormalized_detail2 = denormalize(cir_iris, cir_pupil, iris, polar_array2)
-    result2 = result2_sp + (GAIN/np.max(denormalized_detail2 + np.min(denormalized_detail2)))*denormalized_detail2
+    result2 = result2_sp + (GAIN*norm/(np.max(denormalized_detail2) - np.min(denormalized_detail2)))*denormalized_detail2
 
     plt.title('Iris Detail Recovered from Distinct Normalized Template')
     plt.text(15, 15, "Original Image={}, Iris Detail: {}".format(fn1, fn2))

@@ -1,14 +1,11 @@
+import cv2
 from matplotlib import pyplot as plt
-import path
-from cv2 import imread
 
+filename = 'testing.jpg'
+a = cv2.imread(filename)
 
-from glob import glob
+cv2.imshow('asdf', a)
+cv2.waitKey(0)
+  
 
-import os
-
-import argparse
-
-
-imread('./dataset/CASIA1/8/008_1_2.jpg', 0)
-
+cv2.destroyAllWindows()

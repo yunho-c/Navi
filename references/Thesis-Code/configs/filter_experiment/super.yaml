@@ -1,0 +1,28 @@
+data_config: configs/data/home-dev.yaml
+filters:
+- super_filter
+- super_filter_reverse
+method: NaiveMultiObjectiveOptimizer
+metrics:
+  gaze_metrics:
+    - GazeAccuracy
+  image_metrics:
+    - GradientEntropyImage
+    - GaborEntropyImage
+    - ImageSimilarity
+  iris_metrics:
+    - GradientEntropyIris
+    - GaborEntropyIris
+    - IrisDistance
+  pupil_metrics:
+    - PupilDetectionError
+metrics_config: configs/metrics/std.yaml
+polar_resolution:
+- 10
+- 100
+samples:
+  gaze: 50
+  iris: 50
+  pupil: 50
+#strategy_config: configs/strategies/tester.yaml
+strategy_config: configs/strategies/11-11-20-super.yaml

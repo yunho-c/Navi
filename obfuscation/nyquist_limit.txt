@@ -1,0 +1,6 @@
+thinking about nyquist limit.
+honestly polar is pretty inefficient format of representing image data :(
+so much more redundancy compared to rectangular. i think.
+
+let's start fetching data to analyze the average size of iris, so we can
+determine reasonable radial and angular resolutions.

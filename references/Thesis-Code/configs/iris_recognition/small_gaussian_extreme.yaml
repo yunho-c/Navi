@@ -1,0 +1,25 @@
+dataset: /home/anton/data/eyedata/iris/casia4iM.json
+filters:
+  gaussian_filter:
+    sigma: 50.0
+  non_local_means:
+    h: 100
+  uniform_noise:
+    intensity: 80
+  salt_and_pepper:
+    intensity: 100
+    density: 0.5
+  bilateral_filter:
+    sigma_s: 20
+    sigma_c: 50
+    steps: 3
+parameters:
+  angles: 6
+  epsilon: 0.00001
+  resolution:
+    angular: 100
+    radial: 10
+  rotation:
+    num: 7
+    step_size: 3
+  scales: 4

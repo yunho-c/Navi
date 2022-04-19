@@ -1,0 +1,55 @@
+bilateral_filter:
+  sigma_s:
+    type: samples_uniform
+    params:
+      a: 0
+      b: 30
+    mutation:
+      sigma: 1
+      mean: 0.0
+  sigma_c:
+    type: samples_uniform
+    params:
+      a: 0.1
+      b: 100
+    mutation:
+      sigma: 1
+      mean: 0.0
+
+gaussian_filter:
+  sigma:
+    type: samples_uniform
+    params:
+      a: 0.01
+      b: 5.0
+    mutation:
+      sigma: 0.5
+      mean: 0.0
+
+uniform_noise:
+  intensity:
+    type: samples_uniform
+    params:
+      a: 0
+      b: 100
+    mutation:
+      sigma: 5
+      mean: 0
+
+
+gaussian_noise:
+  loc:
+    type: const
+    params:
+      val: 0.0
+    mutation:
+      sigma: 0
+      mean: 0
+  scale:
+    type: samples_uniform
+    params:
+      a: 0
+      b: 100
+    mutation:
+      sigma: 5
+      mean: 0

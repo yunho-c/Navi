@@ -1,0 +1,34 @@
+polar_resolution:
+  angular: 100
+  radial: 10
+
+constructor_args:
+  GradientEntropyIris:
+    histogram_divisions: 16
+
+  GaborEntropyIris:
+    scales: 6
+    angles_per_scale: 3
+    histogram_divisions: 16
+
+  GradientEntropyImage:
+    histogram_divisions: 16
+
+  GaborEntropyImage:
+    scales: 6
+    angles_per_scale: 3
+    histogram_divisions: 16
+
+  GazeAccuracy: {}
+
+  PupilDetectionError:
+    detectors:
+      - ElseDetector
+      - DeepEyeDetector
+
+  IrisDistance:
+    angles: 6
+    scales: 4
+    eps: 0.001
+
+  ImageSimilarity: {}

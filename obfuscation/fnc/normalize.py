@@ -7,8 +7,8 @@ import numpy as np
 ##-----------------------------------------------------------------------------
 ##  Function
 ##-----------------------------------------------------------------------------
-def normalize(image, x_iris, y_iris, r_iris, x_pupil, y_pupil, r_pupil,
-			  radpixels, angulardiv):
+# TODO: normalize() mutates image. spent hours tryina debug this shit
+def normalize(img, cir_iris, cir_pupil, radial_res=120, angular_res=240):
 	"""
 	Description:
 		Normalize iris region by unwraping the circular region into a rectangular
@@ -17,23 +17,25 @@ def normalize(image, x_iris, y_iris, r_iris, x_pupil, y_pupil, r_pupil,
 	Input:
 		image		- Input iris image.
 
-		x_iris		- x-coordinate of the circle defining the iris boundary.
-		y_iris		- y-coordinate of the circle defining the iris boundary.
-		r_iris		- Radius of the circle defining the iris boundary.
+		cir_iris	- center coordinate (y,x) and radius circle defining the iris boundary.
+		cir_pupil	- center coordinate (y,x) and radius circle defining the pupil boundary.
 
-		x_pupil		- x-coordinate of the circle defining the pupil boundary.
-		y_pupil		- y-coordinate of the circle defining the pupil boundary.
-		r_pupil		- Radius of the circle defining the pupil boundary.
-
-		radpixels	- Radial resolution (vertical dimension).
-		angulardiv	- Angular resolution (horizontal dimension).
+		radial_res	- Radial resolution (vertical dimension).
+		angular_res	- Angular resolution (horizontal dimension).
 
 	Output:
 		polar_array	- Normalized form of the iris region.
 		polar_noise	- Normalized form of the noise region.
 	"""
-	radiuspixels = radpixels + 2
-	angledivisions = angulardiv-1
+	image = img.copy()
+	y_iris, x_iris, r_iris = cir_iris
+	y_pupil, x_pupil, r_pupil = cir_pupil
+
+
+	norm = (np.nanmax(image) - np.nanmin(image))
+
+	radiuspixels = radial_res + 2
+	angledivisions = angular_res-1
 
 	r = np.arange(radiuspixels)
 	theta = np.linspace(0, 2*np.pi, angledivisions+1)
@@ -129,7 +131,7 @@ def normalize(image, x_iris, y_iris, r_iris, x_pupil, y_pupil, r_pupil,
 	avg = np.sum(polar_array2) / (polar_array.shape[0] * polar_array.shape[1])
 	polar_array[coords] = avg
 
-	return polar_array, polar_noise.astype(bool)
+	return polar_array, polar_noise.astype(bool), norm
 
 
 #------------------------------------------------------------------------------

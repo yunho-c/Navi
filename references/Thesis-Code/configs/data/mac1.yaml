@@ -1,0 +1,12 @@
+gaze_data:
+  - '/Users/Anton/MEGA/Data/thesis/gaze/far_home'
+  - '/Users/Anton/MEGA/Data/thesis/gaze/mor_home'
+  - '/Users/Anton/MEGA/Data/thesis/gaze/jakob'
+  - '/Users/Anton/MEGA/Data/thesis/gaze/anton'
+  - '/Users/Anton/MEGA/Data/thesis/gaze/maja'
+
+iris_data:
+  - '/Users/Anton/Desktop/data/iris/casia4i.json'
+
+pupil_data:
+  - '/Users/Anton/Desktop/data/pupil/info.json'
