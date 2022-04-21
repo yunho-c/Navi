@@ -21,6 +21,7 @@ class IrisSegmentation(Dataset):
         self.img_filenames = []
         self.label_filenames = []
 
+        print(base_dir)
         image_dir = os.path.join(base_dir, split, "image")
         for root, dirs, files in os.walk(image_dir):
             for filename in files:
@@ -29,6 +30,7 @@ class IrisSegmentation(Dataset):
                 img_filename = os.path.join(root, filename)
                 filename = filename.strip(".JPEG")
                 label_filename = os.path.join(base_dir, split, "SegmentationClass/{}.png".format(filename))
+                # print('SUCCESSFUL:', label_filename) # DEBUG
                 if os.path.exists(img_filename) and os.path.exists(label_filename):
                     self.img_filenames.append(img_filename)
                     self.label_filenames.append(label_filename)

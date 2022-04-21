@@ -1,0 +1,1 @@
+Note that because there were some problems with five images in the original CASIA.v4-distance dataset, we removed these images and used the rest of the dataset for experiments in the paper.

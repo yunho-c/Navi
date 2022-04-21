@@ -1,0 +1,2 @@
+py -3.9 train.py --backbone xception --lr 7e-3 --workers 8 --epochs 500 --batch_size 4 --gpu_ids 0,1 --checkname deeplab-xception --eval-interval 1 --dataset iris_seg
+py -3.9 train.py --backbone xception --lr 7e-3 --workers 4 --epochs 500 --batch-size 4 --checkname deeplab-xception --eval-interval 1 --dataset iris_seg eference
