@@ -1,0 +1,7 @@
+version: '3.7'
+
+services:
+  caffe_tifs:
+    build: .
+    platform: linux/amd64
+    restart: unless-stopped

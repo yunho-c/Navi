@@ -5,18 +5,16 @@ from cv2 import imread
 
 def process_image(img, debug=False):
 
-    # detect iris
-    [eye1, eye2], coords = find_eyes(img, square=True)
+    # detect eye regions
+    eyes, coords = find_eyes(img, square=True)
 
-    # perform obfuscation
-    eye1_rslt = obfuscate_color(eye1)
-    eye2_rslt = obfuscate_color(eye2)
+    for index, eye in enumerate(eyes):
+        # perform obfuscation
+        result = obfuscate_color(eye)
 
-    # paste back onto original image
-    x, y, w, h = coords[0]
-    img[x:x+w,y:y+h] = eye1_rslt
-    x, y, w, h = coords[1] 
-    img[x:x+w,y:y+h] = eye2_rslt
+        # paste back onto original image
+        x, y, w, h = coords[index]
+        img[x:x+w,y:y+h] = result
 
     # it'll be nice to be able to access intermediate representations, like segmentation results, etc
     if debug: pass
@@ -25,14 +23,14 @@ def process_image(img, debug=False):
 
 
 def main():
-    filename = 'testing3.jpg'
+    filename = 'testing.jpg'
     import cv2
 
     orig = imread(filename)
     cv2.imshow('original', orig)
     cv2.waitKey(0); cv2.destroyAllWindows()
 
-    img = process_image(filename)
+    img = process_image(imread(filename))
     cv2.imshow('obfuscated', img)
     cv2.waitKey(0); cv2.destroyAllWindows()
 

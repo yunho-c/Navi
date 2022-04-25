@@ -1,0 +1,5 @@
+services:
+  caffe_tifs:
+    build: .
+    platform: linux/amd64
+    restart: unless-stopped

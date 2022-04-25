@@ -87,7 +87,7 @@ def create_labels(map,threshold=0.5): #h*w
 
 
 assert isfile(args.model) and isfile(args.net), 'file not exists'
-USE_GPU = True
+USE_GPU = False # True
 if USE_GPU:
    caffe.set_device(args.gpu)
    caffe.set_mode_gpu()

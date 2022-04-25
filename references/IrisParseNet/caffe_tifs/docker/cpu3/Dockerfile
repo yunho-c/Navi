@@ -44,8 +44,10 @@ ENV CLONE_TAG=1.0
 #     make -j"$(nproc)"
 
 RUN git clone -b ${CLONE_TAG} --depth 1 https://github.com/BVLC/caffe.git .
-# RUN pip install --upgrade pip
-RUN cd python && for req in $(cat                  .txt) pydot; do pip install $req; done && cd ..
+RUN pip install --upgrade pip
+RUN apt update -y && apt install python3-pip -y
+RUN cd python && for req in $(cat requirements.txt) pydot; do pip install $req; done && cd ..
+RUN cd python && for req in $(cat requirements.txt) pydot; do pip3 install $req; done && cd ..
 RUN mkdir build && cd build
 RUN cmake -DCPU_ONLY=1
 # ..
