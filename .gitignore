@@ -156,3 +156,4 @@ cython_debug/
 *.caffemodel
 *.pt
 *.npy
+obfuscation/.venv.zip
