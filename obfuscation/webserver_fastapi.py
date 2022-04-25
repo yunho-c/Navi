@@ -29,7 +29,7 @@ async def index():
 
 
 def read_image(image_encoded):
-    image = np.array(Image.open(BytesIO(image_encoded)))
+    image = np.array(Image.open(BytesIO(image_encoded)))[:,:,:3]
     print(image)
     return image
 
