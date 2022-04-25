@@ -6,12 +6,14 @@ from typing import Optional
 
 import uvicorn
 from fastapi import File, UploadFile
-from starlette.responses import RedirectResponse
+from starlette.responses import RedirectResponse, StreamingResponse
 from PIL import Image
 from io import BytesIO
 
 from process_image import process_image
 import numpy as np
+
+import cv2
 
 
 UPLOAD_FOLDER = '/path/to/the/uploads'
@@ -26,7 +28,7 @@ async def index():
     return RedirectResponse(url="/docs")
 
 
-async def read_image(image_encoded):
+def read_image(image_encoded):
     image = np.array(Image.open(BytesIO(image_encoded)))
     print(image)
     return image
@@ -40,10 +42,14 @@ def allowed_file(filename):
 @app.post('/api/process')
 async def process(file: UploadFile = File(...)):
     if allowed_file(file.filename):
-        img = read_image(file.read())
-        return img.shape
+        img = read_image(await file.read())
+        # return img.shape
         img = process_image(img)
-        return Image.fromarray(img)
+        # return Image.fromarray(img)
+        # image_stream = image_bytes
+        res, im_png = cv2.imencode(".png", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        return StreamingResponse(content=BytesIO(im_png), media_type="image/png")
+        # return Response(content=).fromarray(img)
 
 
 if __name__ == "__main__": 
