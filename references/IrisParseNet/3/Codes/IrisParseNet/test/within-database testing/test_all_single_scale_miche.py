@@ -12,8 +12,8 @@ import os, sys, argparse
 import time
 from os.path import join, splitext, split, isfile
 parser = argparse.ArgumentParser(description='Forward all testing images.')
-parser.add_argument('--model', type=str, default='../snapshot/miche/iris_iter_30000.caffemodel') 
-parser.add_argument('--net', type=str, default='../model/miche/deploy_bottom_up.pt')
+parser.add_argument('--model', type=str, default='../../snapshot/miche/iris_iter_30000.caffemodel') 
+parser.add_argument('--net', type=str, default='../../model/miche/deploy_bottom_up.pt')
 parser.add_argument('--gpu', type=int, default=0)
 args = parser.parse_args()
 caffe_root = './caffe/'
@@ -87,7 +87,7 @@ def create_labels(map,threshold=0.5): #h*w
 
 
 assert isfile(args.model) and isfile(args.net), 'file not exists'
-USE_GPU = True
+USE_GPU = False
 if USE_GPU:
    caffe.set_device(args.gpu)
    caffe.set_mode_gpu()

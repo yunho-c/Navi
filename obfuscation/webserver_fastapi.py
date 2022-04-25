@@ -30,7 +30,8 @@ async def index():
 
 def read_image(image_encoded):
     image = np.array(Image.open(BytesIO(image_encoded)))[:,:,:3]
-    print(image)
+    print(image.shape)
+    # print(image)
     return image
 
 
@@ -44,7 +45,9 @@ async def process(file: UploadFile = File(...)):
     if allowed_file(file.filename):
         img = read_image(await file.read())
         # return img.shape
-        img = process_image(img)
+        try: img = process_image(img)
+        except Exception as e:
+            print('ERROR:', e)
         # return Image.fromarray(img)
         # image_stream = image_bytes
         res, im_png = cv2.imencode(".png", cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
