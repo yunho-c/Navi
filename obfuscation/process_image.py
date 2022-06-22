@@ -23,7 +23,11 @@ def process_image(img, debug=False):
 
 
 def main():
-    filename = 'testing.jpg'
+    # filename = 'testing.jpg'
+    # filename = './dataset/custom/us3_R.jpg'
+    filename = './dataset/custom/cs_02.jpg'
+    # filename = './dataset/custom/mi_04.jpg'
+
     import cv2
 
     orig = imread(filename)
@@ -31,6 +35,7 @@ def main():
     cv2.waitKey(0); cv2.destroyAllWindows()
 
     img = process_image(imread(filename))
+    cv2.imwrite(filename[:-4]+'_obsf.jpg', img)
     cv2.imshow('obfuscated', img)
     cv2.waitKey(0); cv2.destroyAllWindows()
 
