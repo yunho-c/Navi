@@ -6,8 +6,8 @@ kiwisolver==1.0.1
 matplotlib==3.0.1
 networkx==2.2
 numpy==1.14.2
-opencv-python==3.4.10.37 #3.4.17.61 #3.4.3.18
-Pillow==5.3.0
+opencv-python==4.7.0.72 #3.4.10.37 #3.4.17.61 #3.4.3.18
+Pillow==9.5.0
 pyparsing==2.3.0
 python-dateutil==2.7.5
 PyWavelets==1.0.1
